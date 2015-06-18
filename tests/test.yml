@@ -1,0 +1,6 @@
+# test file for ssh-client
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ansible-ssh-client

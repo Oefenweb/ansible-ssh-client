@@ -1,0 +1,9 @@
+# tasks file for ssh-client
+---
+- name: install package
+  apt:
+    name: openssh-client
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+  tags: [configuration, ssh-client, ssh-client-install]

@@ -1,0 +1,7 @@
+# test file for ssh-client
+---
+- hosts: all
+  remote_user: vagrant
+  sudo: true
+  roles:
+    - ssh-client

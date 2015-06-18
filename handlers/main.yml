@@ -1,0 +1,6 @@
+# handlers file for ssh-client
+---
+- name: restart ssh
+  service:
+    name: ssh
+    state: restarted
