@@ -1,9 +1,17 @@
 # tasks file for ssh-client
 ---
-- name: install package
+- name: install dependencies
   apt:
-    name: openssh-client
+    name: "{{ item }}"
     state: latest
     update_cache: true
     cache_valid_time: 3600
+  with_items: ssh_client_dependencies
+  tags: [configuration, ssh-client, ssh-client-dependencies]
+
+- name: install
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: ssh_client_install
   tags: [configuration, ssh-client, ssh-client-install]

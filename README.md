@@ -10,7 +10,7 @@ None
 
 #### Variables
 
-None
+* `ssh_client_install`: [default: `[]`]: Additional packages to install
 
 ## Dependencies
 
@@ -22,7 +22,7 @@ None
 ---
 - hosts: all
   roles:
-  - ssh-client
+    - ssh-client
 ```
 
 #### License

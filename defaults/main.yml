@@ -1,2 +1,3 @@
 # defaults file for ssh-client
 ---
+ssh_client_install: []
