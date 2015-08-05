@@ -4,6 +4,7 @@
   remote_user: root
   roles:
     - ansible-ssh-client
+  vars:
     ssh_client_my_configurations:
       - dest: '~travis/.ssh/config'
         owner: travis
