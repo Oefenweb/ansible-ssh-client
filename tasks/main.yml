@@ -1,6 +1,6 @@
 # tasks file for ssh-client
 ---
-- name: install dependencies
+- name: install | dependencies
   apt:
     name: "{{ item }}"
     state: latest
@@ -9,9 +9,29 @@
   with_items: ssh_client_dependencies
   tags: [configuration, ssh-client, ssh-client-dependencies]
 
-- name: install
+- name: install | additional
   apt:
     name: "{{ item }}"
     state: latest
   with_items: ssh_client_install
   tags: [configuration, ssh-client, ssh-client-install]
+
+- name: create configuration directories
+  file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default(item.owner) | default('root') }}"
+    mode: "{{ '0755' if item.dest | dirname | match('/etc/.*') else '0700' }}"
+  with_items: ssh_client_configurations
+  tags: [configuration, ssh-client, ssh-client-configuration]
+
+- name: update configuration files
+  template:
+    src: etc/ssh/ssh_config.j2
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default(item.owner) | default('root') }}"
+    mode: 0644
+  with_items: ssh_client_configurations
+  tags: [configuration, ssh-client, ssh-client-configuration]

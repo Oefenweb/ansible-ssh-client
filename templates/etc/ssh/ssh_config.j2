@@ -1,1 +1,37 @@
 # {{ ansible_managed }}
+
+# This is the ssh client system-wide configuration file.  See
+# ssh_config(5) for more information.  This file provides defaults for
+# users, and the values can be changed in per-user configuration files
+# or on the command line.
+
+# Configuration data is parsed as follows:
+#  1. command line options
+#  2. user-specific file
+#  3. system-wide file
+# Any configuration value is only changed the first time it is set.
+# Thus, host-specific definitions should be at the beginning of the
+# configuration file, and defaults at the end.
+
+# Site-wide defaults for some commonly used options.  For a comprehensive
+# list of available options, their meanings and defaults, please see the
+# ssh_config(5) man page.
+
+{% for host in item.hosts %}
+Host {{ host.pattern }}
+  {% if host.forward_agent is defined %}
+  ForwardAgent {{ 'yes' if host.forward_agent else 'no' }}
+  {% endif %}
+  {% if host.send_env is defined %}
+  SendEnv {{ host.send_env }}
+  {% endif %}
+  {% if host.hash_known_hosts is defined %}
+  HashKnownHosts {{ 'yes' if host.hash_known_hosts else 'no' }}
+  {% endif %}
+  {% if host.gssapi_authentication is defined %}
+  GSSAPIAuthentication {{ 'yes' if host.gssapi_authentication else 'no' }}
+  {% endif %}
+  {% if host.gssapi_delegate_credentials is defined %}
+  GSSAPIDelegateCredentials {{ 'yes' if host.gssapi_delegate_credentials else 'no' }}
+  {% endif %}
+{% endfor %}
