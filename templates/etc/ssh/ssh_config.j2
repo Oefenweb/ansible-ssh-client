@@ -68,7 +68,9 @@ Host {{ host.pattern | join(' ') }}
   StrictHostKeyChecking {{ host.strict_host_key_checking }}
 {% endif %}
 {% if host.identity_file is defined %}
-  IdentityFile {{ host.identity_file }}
+{% for identity_file in host.identity_file %}
+  IdentityFile {{ identity_file }}
+{% endfor %}
 {% endif %}
 {% if host.port is defined %}
   Port {{ host.port }}
@@ -89,7 +91,7 @@ Host {{ host.pattern | join(' ') }}
   EscapeChar {{ host.escape_char }}
 {% endif %}
 {% if host.tunnel is defined %}
-  Tunnel {{ 'yes' if host.tunnel else 'no' }}
+  Tunnel {{ host.tunnel }}
 {% endif %}
 {% if host.tunnel_device is defined %}
   TunnelDevice {{ host.tunnel_device }}
@@ -98,7 +100,7 @@ Host {{ host.pattern | join(' ') }}
   PermitLocalCommand {{ 'yes' if host.permit_local_command else 'no' }}
 {% endif %}
 {% if host.visual_host_key is defined %}
-      VisualHostKey {{ 'yes' if host.visual_host_key else 'no' }}
+  VisualHostKey {{ 'yes' if host.visual_host_key else 'no' }}
 {% endif %}
 {% if host.proxy_command is defined %}
   ProxyCommand {{ host.proxy_command }}
