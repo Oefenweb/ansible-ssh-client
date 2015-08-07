@@ -18,6 +18,7 @@ None
 * `ssh_client_configurations.{n}.group`: [default: `owner`, `root`]: The name of the group that should own the file
 * `ssh_client_configurations.{n}.hosts`: [default: `[]`]: Host declaration(s)
 * `ssh_client_configurations.{n}.hosts.{n}.pattern`: [required]: Pattern to match hosts (e.g. `*`, `['*.co.uk', '192.168.0.?']`)
+* `ssh_client_configurations.{n}.hosts.{n}.host_name`: [optional]: Specifies the real host name to log into. This can be used to specify nicknames or abbreviations for hosts
 * `ssh_client_configurations.{n}.hosts.{n}.forward_agent`: [optional]: Specifies whether the connection to the authentication agent (if any) will be forwarded to the remote machine
 * `ssh_client_configurations.{n}.hosts.{n}.forward_x11`: [optional]: Specifies whether X11 connections will be automatically redirected over the secure channel and DISPLAY set
 * `ssh_client_configurations.{n}.hosts.{n}.forward_x11_trusted`: [optional]: If this option is set to `true`, remote X11 clients will have full access to the original X11 display
@@ -33,9 +34,9 @@ None
 * `ssh_client_configurations.{n}.hosts.{n}.check_host_ip`: [optional]: If this flag is set to `true`, `ssh` will additionally check the host IP address in the known_hosts file
 * `ssh_client_configurations.{n}.hosts.{n}.address_family`: [optional]: Specifies which address family to use when connecting. Valid arguments are `any`, `inet` (use IPv4 only), or `inet6` (use IPv6 only)
 * `ssh_client_configurations.{n}.hosts.{n}.connect_timeout`: [optional]: Specifies the timeout (in seconds) used when connecting to the SSH server, instead of using the default system TCP timeout
-* `ssh_client_configurations.{n}.hosts.{n}.strict_host_key_checking`: [optional]:  If this flag is set to `true`, `ssh` will never automatically add host keys to the `~/.ssh/known_hosts` file, and refuses to connect to hosts whose host key has changed
+* `ssh_client_configurations.{n}.hosts.{n}.strict_host_key_checking`: [optional]: If this flag is set to `true`, `ssh` will never automatically add host keys to the `~/.ssh/known_hosts` file, and refuses to connect to hosts whose host key has changed
 * `ssh_client_configurations.{n}.hosts.{n}.identity_file`: [optional]: Specifies a file from which the user’s RSA or DSA authentication identity is read. It is possible to have multiple identity files specified in configuration files; all these identities will be tried in sequence (e.g. `['~/.ssh/identity', '~/.ssh/id_rsa', '~/.ssh/id_dsa']`)
-* `ssh_client_configurations.{n}.hosts.{n}.port`: [optional]:  Specifies the port number to connect on the remote host
+* `ssh_client_configurations.{n}.hosts.{n}.port`: [optional]: Specifies the port number to connect on the remote host
 * `ssh_client_configurations.{n}.hosts.{n}.protocol`: [optional]: Specifies the protocol versions ssh(1) should support in order of preference (e.g. `[2, 1]`)
 * `ssh_client_configurations.{n}.hosts.{n}.cipher`: [optional]: Specifies the cipher to use for encrypting the session in protocol version 1 (e.g. `3des`)
 * `ssh_client_configurations.{n}.hosts.{n}.ciphers`: [optional]: Specifies the ciphers allowed for protocol version 2 in order of preference (e.g. `[aes128-ctr, aes192-ctr, aes256-ctr, arcfour256, arcfour128, aes128-cbc, 3des-cbc]`)
@@ -49,6 +50,11 @@ None
 * `ssh_client_configurations.{n}.hosts.{n}.rekey_limit`: [optional]: Specifies the maximum amount of data that may be transmitted before the session key is renegotiated
 * `ssh_client_configurations.{n}.hosts.{n}.send_env`: [optional]: Specifies what variables from the local `environ` should be sent to the server
 * `ssh_client_configurations.{n}.hosts.{n}.hash_known_hosts`: [optional]: Indicates that `ssh` should hash host names and addresses when they are added to `~/.ssh/known_hosts`
+* `ssh_client_configurations.{n}.hosts.{n}.compression`: [optional]: Specifies whether to use compression
+* `ssh_client_configurations.{n}.hosts.{n}.compression_level`: [optional]: Specifies the compression level to use if compression is enabled
+* `ssh_client_configurations.{n}.hosts.{n}.control_master`: [optional]: Enables the sharing of multiple sessions over a single network connection (e.g. `'yes'`, `'no'`, `'ask'`, `'auto'`)
+* `ssh_client_configurations.{n}.hosts.{n}.control_path`: [optional]: Specify the path to the control socket used for connection sharing as described in the `ControlMaster` section above or the string `none` to disable connection sharing (e.g. `~/.ssh/control-master/%r@%h:%p`)
+* `ssh_client_configurations.{n}.hosts.{n}.control_persist`: [optional]: When used in conjunction with `ControlMaster`, specifies that the master connection should remain open in the background (waiting for future client connections) after the initial client connection has been closed (e.g. `'no'`, `'yes'`, `'60m'`)
 
 ## Dependencies
 
@@ -63,16 +69,24 @@ None
     - ../../
   vars:
     ssh_client_custom_configurations:
-      - dest: '~root/.ssh/config'
-        owner: root
+      - dest: '~cacti/.ssh/config'
+        owner: cacti
         hosts:
           - pattern: '*'
-            forward_agent: true
+            control_master: 'auto'
+            control_path: '~/.ssh/control-master/%r@%h:%p'
+            control_persist: '60m'
       - dest: '~vagrant/.ssh/config'
         owner: vagrant
         hosts:
-          - pattern: '*'
-            forward_x11: false
+          - pattern: bitbucket-repo-1
+            host_name: bitbucket.org
+            identity_file:
+              - '~/.ssh/bitbucket-repo-1'
+          - pattern: bitbucket-repo-2
+            host_name: bitbucket.org
+            identity_file:
+              - '~/.ssh/bitbucket-repo-2'
     ssh_client_configurations: "{{ ssh_client_default_configuration + ssh_client_custom_configurations }}"
 ```
 

@@ -19,6 +19,9 @@
 
 {% for host in item.hosts | default([]) %}
 Host {{ host.pattern | join(' ') }}
+{% if host.host_name is defined %}
+  HostName {{ host.host_name }}
+{% endif %}
 {% if host.forward_agent is defined %}
   ForwardAgent {{ 'yes' if host.forward_agent else 'no' }}
 {% endif %}
@@ -113,5 +116,20 @@ Host {{ host.pattern | join(' ') }}
 {% endif %}
 {% if host.hash_known_hosts is defined %}
   HashKnownHosts {{ 'yes' if host.hash_known_hosts else 'no' }}
+{% endif %}
+{% if host.compression is defined %}
+  Compression {{ 'yes' if host.compression else 'no' }}
+{% endif %}
+{% if host.compression_level is defined %}
+  CompressionLevel {{ host.compression_level }}
+{% endif %}
+{% if host.control_master is defined %}
+  ControlMaster {{ host.control_master }}
+{% endif %}
+{% if host.control_path is defined %}
+  ControlPath {{ host.control_path }}
+{% endif %}
+{% if host.control_persist is defined %}
+  ControlPersist {{ host.control_persist }}
 {% endif %}
 {% endfor %}
