@@ -1,0 +1,79 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - ANSIBLE_VERSION=latest
+  - ANSIBLE_VERSION=1.9.2
+  - ANSIBLE_VERSION=1.9.1
+  - ANSIBLE_VERSION=1.9.0.1
+  - ANSIBLE_VERSION=1.8.4
+  - ANSIBLE_VERSION=1.8.3
+  - ANSIBLE_VERSION=1.8.2
+  - ANSIBLE_VERSION=1.8.1
+  - ANSIBLE_VERSION=1.8
+  - ANSIBLE_VERSION=1.7.2
+  - ANSIBLE_VERSION=1.7.1
+  - ANSIBLE_VERSION=1.7
+  - ANSIBLE_VERSION=1.6.9
+  - ANSIBLE_VERSION=1.6.8
+  - ANSIBLE_VERSION=1.6.7
+  - ANSIBLE_VERSION=1.6.6
+  - ANSIBLE_VERSION=1.6.5
+  - ANSIBLE_VERSION=1.6.4
+  - ANSIBLE_VERSION=1.6.3
+  - ANSIBLE_VERSION=1.6.2
+  - ANSIBLE_VERSION=1.6.10
+  - ANSIBLE_VERSION=1.6.1
+  - ANSIBLE_VERSION=1.6
+  - ANSIBLE_VERSION=1.5.5
+  - ANSIBLE_VERSION=1.5.4
+  - ANSIBLE_VERSION=1.5.3
+  - ANSIBLE_VERSION=1.5.2
+  - ANSIBLE_VERSION=1.5.1
+  - ANSIBLE_VERSION=1.5
+  - ANSIBLE_VERSION=1.4.5
+  - ANSIBLE_VERSION=1.4.4
+  - ANSIBLE_VERSION=1.4.3
+  - ANSIBLE_VERSION=1.4.2
+  - ANSIBLE_VERSION=1.4.1
+  - ANSIBLE_VERSION=1.4
+
+matrix:
+  allow_failures:
+    # See https://github.com/ansible/ansible/issues/6385
+    - env: ANSIBLE_VERSION=1.5.1
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+
+  # Remove openssh-client
+  - sudo apt-get remove --purge openssh-client
+
+install:
+  # Install Ansible.
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+
+script:
+  # Check the role/playbook's syntax.
+  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+
+  # Run the role/playbook with ansible-playbook.
+  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo -vvvv
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+notifications:
+  email: false
+  hipchat:
+    rooms:
+      secure: hvsHplbAG6PNw3HAu3azSIuz4bFhkvIsQ3w4narAulfT1jdj6R4Z7Jc4+bHpG9CEH4q9JyQLKH34WsUzj4Edo8wXSlTjUq6IrIHUR3pv3wFcW9KJllAzN3ca4s2M/4VboDJ9anSMUBo1SI72gmiDNFsyrQ0ZIG//wFIm2R4OM+8dIMJuYNnZNBWuhNKriqay6FvV861zqHBg8Uryj81xs9eIDbgynRUFpf0hc+7o7MvJ3AlLljdIY7kJkvOkO/YsRZZAjBy2NK31xM/n3RY2JrTxOMng/eT1QM7wFNxGy/mQzQXyUPQwhx+t8xL1irjH1UaZkKmoDi82oqvXjBgeH9Cy+g6uI54GLaEZkgW99Y0IOjBGe1+Q5PG1SHAh3ba6myibpPYbmtpdCUxeyos8YLMvu39bAUPtC2R76tLbLOeIwLk+DgTASX2fbZb57xZVZiQYdJMim5jK+4UDyJRS9ZcllgTMIujzxMxpwKHx93SOHW5uDzoPquByXl0Rd59rhMfy3TfMVinN1i17ojmFoO+wNV7zHjxkKUjTspSDJbxRz+XmWIn2y89Ljqb37e5BuvqsVoUMMQy/h1kUmRtsSWoQ1C4wLuh/nBDq4hWuh/Ne4Kb62qSHKhgV6P/E+hNdQcsePw4JFnyh80OsXqGtUXqghGeXhlfpqjkHyzjoPUo=

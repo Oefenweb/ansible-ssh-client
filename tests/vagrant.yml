@@ -1,0 +1,20 @@
+# test file for ssh-client
+---
+- hosts: all
+  remote_user: vagrant
+  sudo: true
+  roles:
+    - ../../
+  vars:
+    ssh_client_custom_configurations:
+      - dest: '~vagrant/.ssh/config'
+        owner: vagrant
+        hosts:
+          - pattern: ['*']
+            send_env: LANG LC_*
+      - dest: '~root/.ssh/config'
+        owner: root
+        hosts:
+          - pattern: ['*']
+            send_env: LANG LC_*
+    ssh_client_configurations: "{{ ssh_client_default_configuration + ssh_client_custom_configurations }}"

@@ -1,0 +1,135 @@
+# {{ ansible_managed }}
+
+# This is the ssh client system-wide configuration file.  See
+# ssh_config(5) for more information.  This file provides defaults for
+# users, and the values can be changed in per-user configuration files
+# or on the command line.
+
+# Configuration data is parsed as follows:
+#  1. command line options
+#  2. user-specific file
+#  3. system-wide file
+# Any configuration value is only changed the first time it is set.
+# Thus, host-specific definitions should be at the beginning of the
+# configuration file, and defaults at the end.
+
+# Site-wide defaults for some commonly used options.  For a comprehensive
+# list of available options, their meanings and defaults, please see the
+# ssh_config(5) man page.
+
+{% for host in item.hosts | default([]) %}
+Host {{ host.pattern | join(' ') }}
+{% if host.host_name is defined %}
+  HostName {{ host.host_name }}
+{% endif %}
+{% if host.forward_agent is defined %}
+  ForwardAgent {{ 'yes' if host.forward_agent else 'no' }}
+{% endif %}
+{% if host.forward_x11 is defined %}
+  ForwardX11 {{ 'yes' if host.forward_x11 else 'no' }}
+{% endif %}
+{% if host.forward_x11_trusted is defined %}
+  ForwardX11Trusted {{ 'yes' if host.forward_x11_trusted else 'no' }}
+{% endif %}
+{% if host.rhosts_rsa_authentication is defined %}
+  RhostsRSAAuthentication {{ 'yes' if host.rhosts_rsa_authentication else 'no' }}
+{% endif %}
+{% if host.rsa_authentication is defined %}
+  RSAAuthentication {{ 'yes' if host.rsa_authentication else 'no' }}
+{% endif %}
+{% if host.password_authentication is defined %}
+  PasswordAuthentication {{ 'yes' if host.password_authentication else 'no' }}
+{% endif %}
+{% if host.hostbased_authentication is defined %}
+  HostbasedAuthentication {{ 'yes' if host.hostbased_authentication else 'no' }}
+{% endif %}
+{% if host.gssapi_authentication is defined %}
+  GSSAPIAuthentication {{ 'yes' if host.gssapi_authentication else 'no' }}
+{% endif %}
+{% if host.gssapi_delegate_credentials is defined %}
+  GSSAPIDelegateCredentials {{ 'yes' if host.gssapi_delegate_credentials else 'no' }}
+{% endif %}
+{% if host.gssapi_key_exchange is defined %}
+  GSSAPIKeyExchange {{ 'yes' if host.gssapi_key_exchange else 'no' }}
+{% endif %}
+{% if host.gssapi_trust_dns is defined %}
+  GSSAPITrustDNS {{ 'yes' if host.gssapi_trust_dns else 'no' }}
+{% endif %}
+{% if host.batch_mode is defined %}
+  BatchMode {{ 'yes' if host.batch_mode else 'no' }}
+{% endif %}
+{% if host.check_host_ip is defined %}
+  CheckHostIP {{ 'yes' if host.check_host_ip else 'no' }}
+{% endif %}
+{% if host.address_family is defined %}
+  AddressFamily {{ host.address_family }}
+{% endif %}
+{% if host.connect_timeout is defined %}
+  ConnectTimeout {{ host.connect_timeout }}
+{% endif %}
+{% if host.strict_host_key_checking is defined %}
+  StrictHostKeyChecking {{ host.strict_host_key_checking }}
+{% endif %}
+{% if host.identity_file is defined %}
+{% for identity_file in host.identity_file %}
+  IdentityFile {{ identity_file }}
+{% endfor %}
+{% endif %}
+{% if host.port is defined %}
+  Port {{ host.port }}
+{% endif %}
+{% if host.protocol is defined %}
+  Protocol {{ host.protocol }}
+{% endif %}
+{% if host.cipher is defined %}
+  Cipher {{ host.cipher }}
+{% endif %}
+{% if host.ciphers is defined %}
+  Ciphers {{ host.ciphers | join(',') }}
+{% endif %}
+{% if host.macs is defined %}
+  MACs {{ host.macs | join(',') }}
+{% endif %}
+{% if host.escape_char is defined %}
+  EscapeChar {{ host.escape_char }}
+{% endif %}
+{% if host.tunnel is defined %}
+  Tunnel {{ host.tunnel }}
+{% endif %}
+{% if host.tunnel_device is defined %}
+  TunnelDevice {{ host.tunnel_device }}
+{% endif %}
+{% if host.permit_local_command is defined %}
+  PermitLocalCommand {{ 'yes' if host.permit_local_command else 'no' }}
+{% endif %}
+{% if host.visual_host_key is defined %}
+  VisualHostKey {{ 'yes' if host.visual_host_key else 'no' }}
+{% endif %}
+{% if host.proxy_command is defined %}
+  ProxyCommand {{ host.proxy_command }}
+{% endif %}
+{% if host.rekey_limit is defined %}
+  RekeyLimit {{ host.rekey_limit }}
+{% endif %}
+{% if host.send_env is defined %}
+  SendEnv {{ host.send_env }}
+{% endif %}
+{% if host.hash_known_hosts is defined %}
+  HashKnownHosts {{ 'yes' if host.hash_known_hosts else 'no' }}
+{% endif %}
+{% if host.compression is defined %}
+  Compression {{ 'yes' if host.compression else 'no' }}
+{% endif %}
+{% if host.compression_level is defined %}
+  CompressionLevel {{ host.compression_level }}
+{% endif %}
+{% if host.control_master is defined %}
+  ControlMaster {{ host.control_master }}
+{% endif %}
+{% if host.control_path is defined %}
+  ControlPath {{ host.control_path }}
+{% endif %}
+{% if host.control_persist is defined %}
+  ControlPersist {{ host.control_persist }}
+{% endif %}
+{% endfor %}

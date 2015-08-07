@@ -1,0 +1,15 @@
+# vars file for ssh-client
+---
+ssh_client_dependencies:
+  - openssh-client
+
+ssh_client_default_configuration:
+  - dest: /etc/ssh/ssh_config
+    owner: root
+    group: root
+    hosts:
+      - pattern: ['*']
+        send_env: LANG LC_*
+        hash_known_hosts: true
+        gssapi_authentication: true
+        gssapi_delegate_credentials: false
