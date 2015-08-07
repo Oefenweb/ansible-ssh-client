@@ -72,18 +72,18 @@ None
       - dest: '~cacti/.ssh/config'
         owner: cacti
         hosts:
-          - pattern: '*'
+          - pattern: ['*']
             control_master: 'auto'
             control_path: '~/.ssh/control-master/%r@%h:%p'
             control_persist: '60m'
       - dest: '~vagrant/.ssh/config'
         owner: vagrant
         hosts:
-          - pattern: bitbucket-repo-1
+          - pattern: ['bitbucket-repo-1']
             host_name: bitbucket.org
             identity_file:
               - '~/.ssh/bitbucket-repo-1'
-          - pattern: bitbucket-repo-2
+          - pattern: ['bitbucket-repo-2']
             host_name: bitbucket.org
             identity_file:
               - '~/.ssh/bitbucket-repo-2'
