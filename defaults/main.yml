@@ -2,4 +2,4 @@
 ---
 ssh_client_install: []
 
-ssh_client_configurations: "{{ ssh_client_default_configuration | union([]) }}"
+ssh_client_configurations: "{{ ssh_client_default_configuration }}"

@@ -8,7 +8,7 @@ ssh_client_default_configuration:
     owner: root
     group: root
     hosts:
-      - pattern: '*'
+      - pattern: ['*']
         send_env: LANG LC_*
         hash_known_hosts: true
         gssapi_authentication: true
