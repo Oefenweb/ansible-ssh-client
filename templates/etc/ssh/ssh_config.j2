@@ -79,7 +79,7 @@ Host {{ host.pattern | join(' ') }}
   Port {{ host.port }}
 {% endif %}
 {% if host.protocol is defined %}
-  Protocol {{ host.protocol }}
+  Protocol {{ host.protocol | join(',') }}
 {% endif %}
 {% if host.cipher is defined %}
   Cipher {{ host.cipher }}
