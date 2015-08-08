@@ -13,7 +13,7 @@ None
 * `ssh_client_install`: [default: `[]`]: Additional packages to install
 
 * `ssh_client_configurations`: [default: `ssh_client_default_configuration`, see `vars/main.yml`]: Configuration declaration(s)
-* `ssh_client_configurations.{n}.dest`: [default: ``]: The remote path of the configuration file (e.g. `/etc/ssh/ssh_config`, ``)
+* `ssh_client_configurations.{n}.dest`: [required]: The remote path of the configuration file (e.g. `/etc/ssh/ssh_config`, `~cacti/.ssh/config`)
 * `ssh_client_configurations.{n}.owner`: [default: `root`]: The name of the user that should own the file
 * `ssh_client_configurations.{n}.group`: [default: `owner`, `root`]: The name of the group that should own the file
 * `ssh_client_configurations.{n}.hosts`: [default: `[]`]: Host declaration(s)
