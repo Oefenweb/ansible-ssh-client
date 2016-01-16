@@ -55,6 +55,7 @@ None
 * `ssh_client_configurations.{n}.hosts.{n}.control_master`: [optional]: Enables the sharing of multiple sessions over a single network connection (e.g. `'yes'`, `'no'`, `'ask'`, `'auto'`)
 * `ssh_client_configurations.{n}.hosts.{n}.control_path`: [optional]: Specify the path to the control socket used for connection sharing as described in the `ControlMaster` section above or the string `none` to disable connection sharing (e.g. `~/.ssh/control-master/%r@%h:%p`)
 * `ssh_client_configurations.{n}.hosts.{n}.control_persist`: [optional]: When used in conjunction with `ControlMaster`, specifies that the master connection should remain open in the background (waiting for future client connections) after the initial client connection has been closed (e.g. `'no'`, `'yes'`, `'60m'`)
+* `ssh_client_configurations.{n}.hosts.{n}.use_roaming`: [optional]:
 
 ## Dependencies
 

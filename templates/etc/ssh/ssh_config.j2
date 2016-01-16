@@ -132,4 +132,7 @@ Host {{ host.pattern | join(' ') }}
 {% if host.control_persist is defined %}
   ControlPersist {{ host.control_persist }}
 {% endif %}
+{% if host.use_roaming is defined %}
+  UseRoaming {{ 'yes' if host.use_roaming else 'no' }}
+{% endif %}
 {% endfor %}
