@@ -44,7 +44,7 @@ before_install:
   - sudo apt-get update -qq
 
   # Remove openssh-client
-  - sudo apt-get remove --purge openssh-client
+  - sudo apt-get remove --purge --yes openssh-client
 
 install:
   # Install Ansible.
