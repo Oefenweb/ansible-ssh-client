@@ -1,6 +1,6 @@
 ## ssh-client
 
-[![Build Status](https://travis-ci.org/Oefenweb/ansible-ssh-client.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-ssh-client) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-ssh--client-blue.svg)](https://galaxy.ansible.com/tersmitten/ssh-client)
+[![Build Status](https://travis-ci.org/Oefenweb/ansible-ssh-client.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-ssh-client) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-ssh--client-blue.svg)](https://galaxy.ansible.com/Oefenweb/ssh-client)
 
 Set up an OpenSSH client in Debian-like systems.
 
