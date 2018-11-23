@@ -2,11 +2,10 @@
 ---
 - name: install dependencies
   apt:
-    name: "{{ item }}"
+    name: "{{ ssh_client_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
-  with_items: "{{ ssh_client_dependencies }}"
   tags:
     - configuration
     - ssh-client
@@ -14,9 +13,8 @@
 
 - name: install additional
   apt:
-    name: "{{ item }}"
+    name: "{{ ssh_client_install }}"
     state: "{{ apt_install_state | default('latest') }}"
-  with_items: "{{ ssh_client_install }}"
   tags:
     - configuration
     - ssh-client
