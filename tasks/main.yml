@@ -26,7 +26,7 @@
     state: directory
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default(item.owner) | default('root') }}"
-    mode: "{{ '0755' if item.dest | dirname | match('/etc/.*') else '0700' }}"
+    mode: "{{ '0755' if item.dest | dirname is match('/etc/.*') else '0700' }}"
   with_items: "{{ ssh_client_configurations }}"
   tags:
     - configuration
