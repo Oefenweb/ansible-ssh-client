@@ -49,6 +49,8 @@ None
 * `ssh_client_configurations.{n}.hosts.{n}.proxy_command`: [optional]: Specifies the command to use to connect to the server
 * `ssh_client_configurations.{n}.hosts.{n}.rekey_limit`: [optional]: Specifies the maximum amount of data that may be transmitted before the session key is renegotiated
 * `ssh_client_configurations.{n}.hosts.{n}.send_env`: [optional]: Specifies what variables from the local `environ` should be sent to the server
+* `ssh_client_configurations.{n}.hosts.{n}.global_known_hosts_file`: [optional]: Specifies one or more files to use for the global host key database, list of files
+* `ssh_client_configurations.{n}.hosts.{n}.user_known_hosts_file`: [optional]: Specifies one or more files to use for the user host key database, list of files
 * `ssh_client_configurations.{n}.hosts.{n}.hash_known_hosts`: [optional]: Indicates that `ssh` should hash host names and addresses when they are added to `~/.ssh/known_hosts`
 * `ssh_client_configurations.{n}.hosts.{n}.compression`: [optional]: Specifies whether to use compression
 * `ssh_client_configurations.{n}.hosts.{n}.compression_level`: [optional]: Specifies the compression level to use if compression is enabled
