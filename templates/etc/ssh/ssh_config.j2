@@ -114,6 +114,9 @@ Host {{ host.pattern | join(' ') }}
 {% if host.send_env is defined %}
   SendEnv {{ host.send_env }}
 {% endif %}
+{% if host.global_known_hosts_file is defined %}
+  GlobalKnownHostsFile {{ host.global_known_hosts_file }}
+{% endif %}
 {% if host.hash_known_hosts is defined %}
   HashKnownHosts {{ 'yes' if host.hash_known_hosts else 'no' }}
 {% endif %}
