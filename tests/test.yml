@@ -3,6 +3,10 @@
 - hosts: localhost
   connection: local
   become: true
+  pre_tasks:
+    - name: pre | create user (if needed)
+      user:
+        name: travis
   roles:
     - ../../
   vars:
