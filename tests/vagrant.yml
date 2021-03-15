@@ -1,4 +1,4 @@
-# test file for ssh-client
+# test file
 ---
 - hosts: all
   remote_user: vagrant

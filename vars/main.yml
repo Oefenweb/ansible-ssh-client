@@ -1,4 +1,4 @@
-# vars file for ssh-client
+# vars file
 ---
 ssh_client_dependencies:
   - openssh-client
