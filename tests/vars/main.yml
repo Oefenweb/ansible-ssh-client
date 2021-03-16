@@ -1,0 +1,14 @@
+# vars file
+---
+ssh_client_custom_configurations:
+  - dest: '~dummy/.ssh/config'
+    owner: dummy
+    hosts:
+      - pattern: ['*']
+        send_env: LANG LC_*
+  - dest: '~root/.ssh/config'
+    owner: root
+    hosts:
+      - pattern: ['*']
+        send_env: LANG LC_*
+ssh_client_configurations: "{{ ssh_client_default_configuration + ssh_client_custom_configurations }}"
