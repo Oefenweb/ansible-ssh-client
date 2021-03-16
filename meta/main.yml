@@ -2,7 +2,7 @@
 ---
 galaxy_info:
   namespace: oefenweb
-  role_name: ssh-client
+  role_name: ssh_client
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
   description: Set up an OpenSSH client in Debian-like systems
