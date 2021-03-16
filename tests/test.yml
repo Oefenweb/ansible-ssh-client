@@ -4,16 +4,9 @@
   connection: local
   become: true
   pre_tasks:
-    - name: pre | create user (if needed)
-      user:
-        name: travis
+    - name: include vars
+      include_vars: "{{ playbook_dir }}/vars/main.yml"
+    - name: include tasks
+      include: "{{ playbook_dir }}/tasks/pre.yml"
   roles:
     - ../../
-  vars:
-    ssh_client_custom_configurations:
-      - dest: '~travis/.ssh/config'
-        owner: travis
-        hosts:
-          - pattern: ['*']
-            send_env: LANG LC_*
-    ssh_client_configurations: "{{ ssh_client_default_configuration + ssh_client_custom_configurations }}"
