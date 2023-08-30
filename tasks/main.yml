@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: install dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ ssh_client_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
@@ -12,7 +12,7 @@
     - ssh-client-dependencies
 
 - name: install additional
-  apt:
+  ansible.builtin.apt:
     name: "{{ ssh_client_install }}"
     state: "{{ apt_install_state | default('latest') }}"
   tags:
@@ -21,7 +21,7 @@
     - ssh-client-install
 
 - name: create configuration directories
-  file:
+  ansible.builtin.file:
     path: "{{ item.dest | dirname }}"
     state: directory
     owner: "{{ item.owner | default('root') }}"
@@ -34,7 +34,7 @@
     - ssh-client-configuration
 
 - name: update configuration files
-  template:
+  ansible.builtin.template:
     src: etc/ssh/ssh_config.j2
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
