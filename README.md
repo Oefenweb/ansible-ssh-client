@@ -70,7 +70,7 @@ None
 ---
 - hosts: all
   roles:
-    - ssh-client
+    - oefenweb.ssh-client
   vars:
     ssh_client_custom_configurations:
       - dest: '~cacti/.ssh/config'
