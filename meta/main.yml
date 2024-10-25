@@ -1,9 +1,8 @@
 # meta file
 ---
 galaxy_info:
-  namespace: oefenweb
+  author: oefenweb
   role_name: ssh_client
-  author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
   description: Set up an OpenSSH client in Debian-like systems
   license: MIT
@@ -23,5 +22,3 @@ galaxy_info:
   galaxy_tags:
     - system
     - networking
-main:
-  yml:dependencies: []
