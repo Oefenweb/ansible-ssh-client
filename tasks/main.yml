@@ -39,7 +39,7 @@
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default(item.owner) | default('root') }}"
-    mode: 0644
+    mode: '0644'
   with_items: "{{ ssh_client_configurations }}"
   tags:
     - configuration
