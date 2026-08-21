@@ -38,6 +38,7 @@ None
 * `ssh_client_configurations.{n}.hosts.{n}.strict_host_key_checking`: [optional]: If this flag is set to `true`, `ssh` will never automatically add host keys to the `~/.ssh/known_hosts` file, and refuses to connect to hosts whose host key has changed
 * `ssh_client_configurations.{n}.hosts.{n}.identity_file`: [optional]: Specifies a file from which the user’s RSA or DSA authentication identity is read. It is possible to have multiple identity files specified in configuration files; all these identities will be tried in sequence (e.g. `['~/.ssh/identity', '~/.ssh/id_rsa', '~/.ssh/id_dsa']`)
 * `ssh_client_configurations.{n}.hosts.{n}.port`: [optional]: Specifies the port number to connect on the remote host
+* `ssh_client_configurations.{n}.hosts.{n}.user`: [optional]: Specifies the user to log in as
 * `ssh_client_configurations.{n}.hosts.{n}.protocol`: [optional]: Specifies the protocol versions ssh(1) should support in order of preference (e.g. `[2, 1]`)
 * `ssh_client_configurations.{n}.hosts.{n}.cipher`: [optional]: Specifies the cipher to use for encrypting the session in protocol version 1 (e.g. `3des`)
 * `ssh_client_configurations.{n}.hosts.{n}.ciphers`: [optional]: Specifies the ciphers allowed for protocol version 2 in order of preference (e.g. `[aes128-ctr, aes192-ctr, aes256-ctr, arcfour256, arcfour128, aes128-cbc, 3des-cbc]`)
