@@ -85,11 +85,11 @@ None
         owner: vagrant
         hosts:
           - pattern: ['bitbucket-repo-1']
-            host_name: bitbucket.org
+            host_name: ssh.bitbucket.org
             identity_file:
               - '~/.ssh/bitbucket-repo-1'
           - pattern: ['bitbucket-repo-2']
-            host_name: bitbucket.org
+            host_name: ssh.bitbucket.org
             identity_file:
               - '~/.ssh/bitbucket-repo-2'
     ssh_client_configurations: "{{ ssh_client_default_configuration + ssh_client_custom_configurations }}"
